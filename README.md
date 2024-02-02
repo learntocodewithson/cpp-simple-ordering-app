@@ -22,7 +22,7 @@ what would you like to do?
 3. Remove product from my cart
 4. Exit
 
-Enter any number form 1 to 4: 1 
+Enter any number from 1 to 4: 1 
 — proceed to screen for buying if 1 is pick
 
 =========
@@ -39,7 +39,9 @@ Products:
 What do you want to order? 1
 How many? 2
 
-Thank you, you ordered Product A (2pcs) with total of 100, and it is added on your cart.repeat Screen 1.
+Thank you, your pizza has been successfully added to your cart.
+
+repeat Screen 1.
 
 
 ===================
