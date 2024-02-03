@@ -2,16 +2,22 @@
 #include<string>
 using namespace std;
 
+struct MyCart {
+  string name;
+  int quantity, price;
+};
+
 // function declaration
 void displayOrderingOptions();
 void displayProducts();
-void buyPizza();
+void buyPizza(MyCart (&my_cart)[5], int &cart_index);
 void editPizzaFromCart();
 void deletePizzaFromCart();
 
 int main(){
- int ordering_option;
+ int ordering_option, cart_index;
  bool exit_option = 0;
+ MyCart my_cart[5];
 
  do {
    displayOrderingOptions();
@@ -20,7 +26,7 @@ int main(){
 
    switch(ordering_option){
     case 1:
-     buyPizza();
+     buyPizza(my_cart, cart_index);
      break;
     case 2:
      editPizzaFromCart();
@@ -51,8 +57,9 @@ void displayOrderingOptions(){
  cout << endl << "4. Exit" << endl;
 }
 
-void buyPizza(){
+void buyPizza(MyCart (&my_cart)[5], int &cart_index){
  int pizza_option, pizza_price, pizza_qty;
+ string pizza_name;
 
  cout << endl <<"-- Buy Product --";
  displayProducts();
@@ -64,24 +71,34 @@ void buyPizza(){
  switch (pizza_option) {
   case 1:
    pizza_price = 160;
+   pizza_name = "KP Hawaiian - 160";
    break;
   case 2:
    pizza_price = 260;
+   pizza_name = "KP Pepperoni Supreme - 260";
    break;
   case 3:
    pizza_price = 295;
+   pizza_name = "KP Beef Pizza(F) - 295";
    break;
   case 4:
    pizza_price = 310;
+   pizza_name = "KP Special(F) - 310";
    break;
   default:
    pizza_price = 0;
+   pizza_name = "";
    cout << "";
  }
  
- // save to array ... 
+ // save to array ...
+ my_cart[cart_index].name = pizza_name;
+ my_cart[cart_index].price = pizza_price;
+ my_cart[cart_index].quantity = pizza_qty;
 
- cout << "Thank you, your pizza has been successfully added to your cart." << endl;
+ cout << "Thank you, your pizza "<< my_cart[cart_index].name << " has been successfully added to your cart." << endl;
+
+ cart_index++;
 }
 
 void editPizzaFromCart(){
