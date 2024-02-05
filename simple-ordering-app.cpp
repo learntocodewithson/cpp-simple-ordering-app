@@ -13,7 +13,8 @@ void displayOrderingOptions();
 void displayProducts();
 void buyPizza(MyCart (&my_cart)[5], int &cart_index);
 void editPizzaFromCart();
-void deletePizzaFromCart();
+void deletePizzaFromCart(MyCart (&my_cart)[5]);
+void removeElement(MyCart (&my_cart)[5], int position);
 
 int main(){
  int ordering_option, cart_index;
@@ -36,7 +37,7 @@ int main(){
      editPizzaFromCart();
      break;
     case 3:
-     deletePizzaFromCart();
+     deletePizzaFromCart(my_cart);
      break;
     case 4:
      exit_option = 1;
@@ -82,7 +83,7 @@ void buyPizza(MyCart (&my_cart)[5], int &cart_index){
  int pizza_option, pizza_price, pizza_qty;
  string pizza_name;
 
- cout << endl <<"-- Buy Product --";
+ cout << endl << "-- Buy Product --";
  displayProducts();
  cout << endl << endl << "What do you want to order? ";
  cin >> pizza_option;
@@ -112,10 +113,15 @@ void buyPizza(MyCart (&my_cart)[5], int &cart_index){
    cout << "";
  }
  
- // save to array ...
- my_cart[cart_index].name = pizza_name;
- my_cart[cart_index].price = pizza_price;
- my_cart[cart_index].quantity = pizza_qty;
+ for(int i = 0; i < 5; i++){
+  if(my_cart[i].name == ""){
+    my_cart[i].name = pizza_name;
+    my_cart[i].price = pizza_price;
+    my_cart[i].quantity = pizza_qty;
+    cart_index = i;
+    break;
+  }
+ }
 
  cout << endl << "Thank you, your pizza "<< my_cart[cart_index].name << " has been successfully added to your cart." << endl << endl;
 
@@ -126,8 +132,37 @@ void editPizzaFromCart(){
  cout << endl <<"-- Edit Product From Cart --";
 }
 
-void deletePizzaFromCart(){
- cout << endl <<"-- Delete Product From Cart --";
+void deletePizzaFromCart(MyCart (&my_cart)[5]){
+ int position;
+ cout << endl << "-- Delete Product From Cart --";
+ displayCart(my_cart);
+ cout << endl << "Enter the position of the pizza that you want to remove: ";
+ cin >> position;
+
+ removeElement(my_cart, position);
+}
+
+void removeElement(MyCart (&my_cart)[5], int position){
+
+  int index = position - 1;
+ 
+  my_cart[index].name = "";
+  my_cart[index].price = 0;
+  my_cart[index].quantity = 0;
+
+  // swapping - customized
+  for(int i = 0; i < 5; i++){
+   if(my_cart[i].name == ""){
+    // update empty values using the next pizza
+    my_cart[i].name = my_cart[i+1].name;
+    my_cart[i].price = my_cart[i+1].price;
+    my_cart[i].quantity = my_cart[i+1].quantity;
+
+    my_cart[i+1].name = "";
+    my_cart[i+1].price = 0;
+    my_cart[i+1].quantity = 0;
+   }
+  }
 }
 
 void displayProducts(){
